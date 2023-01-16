@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from parking.views import generar_ticket_view
-
-
+from parking import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('generar_ticket/', generar_ticket_view, name='generar_ticket'),
+    path('depositar_vehiculo/', views.depositar_vehiculo_view, name='depositar_vehiculo'),
+    path('retirar_vehiculo/', views.retirar_vehiculo_view, name='retirar_vehiculo'),
+
 ]

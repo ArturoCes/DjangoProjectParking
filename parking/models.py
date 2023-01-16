@@ -41,6 +41,7 @@ class Ticket(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True, blank=True)
 
 
+
 class Cobro(models.Model):
     id = models.AutoField(primary_key=True)
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)

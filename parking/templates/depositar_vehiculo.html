@@ -1,0 +1,14 @@
+<form method="post" action="{% url 'depositar_vehiculo' %}">
+  {% csrf_token %}
+  <label for="matricula">Matrícula:</label>
+  <input type="text" id="matricula" name="matricula" required>
+  <br>
+  <label for="tipo">Tipo de vehículo:</label>
+  <select id="tipo" name="tipo" required>
+    <option value="Turismo">Turismo</option>
+    <option value="Moto">Moto</option>
+    <option value="PMR">Movilidad reducida</option>
+  </select>
+  <br><br>
+  <input type="submit" value="Depositar vehículo">
+</form>
