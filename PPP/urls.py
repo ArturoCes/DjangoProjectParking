@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('depositar_vehiculo/', views.depositar_vehiculo_view, name='depositar_vehiculo'),
     path('retirar_vehiculo/', views.retirar_vehiculo_view, name='retirar_vehiculo'),
+    path('depositar_abonado/', views.depositar_abonado_view, name='depositar_abonado'),
 
 ]

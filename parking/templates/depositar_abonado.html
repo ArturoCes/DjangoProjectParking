@@ -1,0 +1,11 @@
+continua <form method="post" action="{% url 'depositar_abonado' %}">
+    {% csrf_token %}
+    <label for="matricula">Matrícula:</label>
+
+<input type="text" name="matricula" id="matricula">
+    <br>
+    <label for="dni">DNI:</label>
+    <input type="text" name="dni" id="dni">
+    <br>
+    <input type="submit" value="Depositar vehículo">
+</form>

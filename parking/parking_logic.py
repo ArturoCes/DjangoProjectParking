@@ -2,13 +2,14 @@ import datetime
 
 import uuid
 
+from decimal import Decimal
+from datetime import datetime
+from .models import Plaza, Ticket, Cobro
+import pytz
+
 
 def generar_pin():
     return str(uuid.uuid4().int)[:6]
-
-
-from datetime import datetime
-from .models import Plaza, Ticket, Cobro
 
 
 def depositar_vehiculo(matricula, tipo):
@@ -45,7 +46,6 @@ def crear_plazas_turismo():
 crear_plazas_turismo()
 
 
-
 def crear_plazas_moto():
     tipos = ['Moto']
     for i in range(1, 101):
@@ -56,6 +56,7 @@ def crear_plazas_moto():
 
 
 crear_plazas_moto()
+
 
 def crear_plazas_pmr():
     tipos = ['PMR']
@@ -69,13 +70,14 @@ def crear_plazas_pmr():
 crear_plazas_pmr()
 
 
-def retirar_vehiculo(matricula, id, pin):
+def retirar_vehiculo(matricula, plaza_id, pin):
     try:
-        ticket = Ticket.objects.get(matricula=matricula, plaza_id=id, pin=pin)
+        ticket = Ticket.objects.get(matricula=matricula, plaza_id=plaza_id, pin=pin)
     except Ticket.DoesNotExist:
         raise ValueError("Ticket no válido")
     # calcular coste
-    diferencia = datetime.now() - ticket.fecha_entrada
+    fecha_entrada = ticket.fecha_entrada.replace(tzinfo=None)
+    diferencia = datetime.now() - fecha_entrada
     importe = diferencia.seconds / 60 * ticket.plaza.tarifa_minuto
     cobro = Cobro(ticket=ticket, importe=importe, fecha_pago=datetime.now())
     cobro.save()
@@ -86,3 +88,6 @@ def retirar_vehiculo(matricula, id, pin):
     # eliminar ticket
     ticket.delete()
     return cobro
+
+
+

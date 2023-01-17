@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Retirar Vehículo</title>
-</head>
-<body>
-<h1>Retirar Vehículo</h1>
 <form method="post" action="{% url 'retirar_vehiculo' %}">
     {% csrf_token %}
     <label for="matricula">Matrícula:</label>
@@ -18,6 +11,3 @@
     <br>
     <input type="submit" value="Retirar vehículo">
 </form>
-
-</body>
-</html>
