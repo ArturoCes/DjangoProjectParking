@@ -46,6 +46,16 @@ crear_plazas_turismo()
 
 
 
+def crear_plazas_moto():
+    tipos = ['Moto']
+    for i in range(1, 101):
+        for tipo in tipos:
+            plaza = Plaza(numero=i, tipo=tipo, estado='Libre', tarifa_minuto=0.10)
+            plaza.save()
+    print("Plazas creadas correctamente.")
+
+
+crear_plazas_moto()
 
 def crear_plazas_pmr():
     tipos = ['PMR']
