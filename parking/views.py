@@ -23,7 +23,7 @@ def depositar_vehiculo_view(request):
 def retirar_vehiculo_view(request):
     if request.method == 'POST':
         matricula = request.POST.get('matricula')
-        plaza_id = request.POST.get('plaza_id')
+        plaza_id = request.POST.get('id')
         pin = request.POST.get('pin')
         try:
             ticket = Ticket.objects.get(matricula=matricula, plaza_id=plaza_id, pin=pin)
@@ -42,19 +42,5 @@ def retirar_vehiculo_view(request):
         return render(request, 'ticket.html', {'cobro': cobro})
     else:
         return render(request, 'retirar_vehiculo.html')
-def retirar_vehiculo(matricula, plaza_id, pin):
-    try:
-        ticket = Ticket.objects.get(matricula=matricula, plaza_id=plaza_id, pin=pin)
-    except Ticket.DoesNotExist:
-        raise ValueError("Ticket no válido")
-    # calcular coste
-    importe = (datetime.now() - ticket.fecha_entrada).seconds / 60 * ticket.plaza.tarifa_minuto
-    cobro = Cobro(ticket=ticket, importe=importe, fecha_pago=datetime.now())
-    cobro.save()
-    # actualizar plaza
-    plaza = ticket.plaza
-    plaza.estado = 'Libre'
-    plaza.save()
-    # eliminar ticket
-    ticket.delete()
-    return cobro
+
+
