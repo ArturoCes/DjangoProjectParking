@@ -5,7 +5,7 @@ import uuid
 from decimal import Decimal
 from datetime import datetime
 from .models import Plaza, Ticket, Cobro
-import pytz
+
 
 
 def generar_pin():
@@ -13,6 +13,11 @@ def generar_pin():
 
 
 def depositar_vehiculo(matricula, tipo):
+    # Verifica si la matrícula ingresada ya está en uso
+    if Ticket.objects.filter(matricula=matricula).exists():
+        print("La matrícula ingresada ya está en uso.")
+        return None
+
     plaza_asignada = None
     plazas_libres = Plaza.objects.filter(estado='Libre', tipo=tipo)
 
@@ -34,40 +39,41 @@ def depositar_vehiculo(matricula, tipo):
     return ticket
 
 
-def crear_plazas_turismo():
-    tipos = ['Turismo']
-    for i in range(1, 101):
-        for tipo in tipos:
-            plaza = Plaza(numero=i, tipo=tipo, estado='Libre', tarifa_minuto=0.12)
-            plaza.save()
-    print("Plazas creadas correctamente.")
-
-
-crear_plazas_turismo()
-
-
-def crear_plazas_moto():
-    tipos = ['Moto']
-    for i in range(1, 101):
-        for tipo in tipos:
-            plaza = Plaza(numero=i, tipo=tipo, estado='Libre', tarifa_minuto=0.10)
-            plaza.save()
-    print("Plazas creadas correctamente.")
-
-
-crear_plazas_moto()
-
-
-def crear_plazas_pmr():
-    tipos = ['PMR']
-    for i in range(1, 101):
-        for tipo in tipos:
-            plaza = Plaza(numero=i, tipo=tipo, estado='Libre', tarifa_minuto=0.10)
-            plaza.save()
-    print("Plazas creadas correctamente.")
-
-
-crear_plazas_pmr()
+#
+# def crear_plazas_turismo():
+#     tipos = ['Turismo']
+#     for i in range(1, 101):
+#         for tipo in tipos:
+#             plaza = Plaza(numero=i, tipo=tipo, estado='Libre', tarifa_minuto=0.12)
+#             plaza.save()
+#     print("Plazas creadas correctamente.")
+#
+#
+# crear_plazas_turismo()
+#
+#
+# def crear_plazas_moto():
+#     tipos = ['Moto']
+#     for i in range(1, 101):
+#         for tipo in tipos:
+#             plaza = Plaza(numero=i, tipo=tipo, estado='Libre', tarifa_minuto=0.10)
+#             plaza.save()
+#     print("Plazas creadas correctamente.")
+#
+#
+# crear_plazas_moto()
+#
+#
+# def crear_plazas_pmr():
+#     tipos = ['PMR']
+#     for i in range(1, 101):
+#         for tipo in tipos:
+#             plaza = Plaza(numero=i, tipo=tipo, estado='Libre', tarifa_minuto=0.10)
+#             plaza.save()
+#     print("Plazas creadas correctamente.")
+#
+#
+# crear_plazas_pmr()
 
 
 def retirar_vehiculo(matricula, plaza_id, pin):
