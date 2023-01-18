@@ -1,12 +1,23 @@
 from django.db import models
 
+from django.db.models import Sum
 
 class Plaza(models.Model):
+    ESTADO_OCUPADO = 'Ocupado'
+    ESTADO_LIBRE = 'Libre'
+    ESTADO_RESERVADO = 'Reservada'
+    ESTADOS_CHOICES = (
+        (ESTADO_OCUPADO, 'Ocupado'),
+        (ESTADO_LIBRE, 'Libre'),
+        (ESTADO_RESERVADO, 'Reservada'),
+    )
+
     id = models.AutoField(primary_key=True)
     numero = models.IntegerField()
     tipo = models.CharField(max_length=20)
-    estado = models.CharField(max_length=20)
+    estado = models.CharField(max_length=20, choices=ESTADOS_CHOICES, default=ESTADO_LIBRE)
     tarifa_minuto = models.DecimalField(max_digits=5, decimal_places=2)
+
 
 class Cliente(models.Model):
     id = models.AutoField(primary_key=True)
@@ -16,21 +27,22 @@ class Cliente(models.Model):
     num_tarjeta = models.CharField(max_length=20)
 
     TIPOS_ABONO = (
-        ('Turismo','Turismo'),
-        ('Moto','Moto'),
-        ('PMR','PMR')
+        ('Turismo', 'Turismo'),
+        ('Moto', 'Moto'),
+        ('PMR', 'PMR')
     )
-    tipo_abono = models.CharField(max_length=20,choices=TIPOS_ABONO, default='Turismo')
+    tipo_abono = models.CharField(max_length=20, choices=TIPOS_ABONO, default='Turismo')
 
     TIPOS_SUSCRIPCION = (
         ('Mensual', 'Mensual'),
         ('Trimestral', 'Trimestral'),
-        ('Semestral','Semestral'),
+        ('Semestral', 'Semestral'),
         ('Anual', 'Anual'),
     )
-    tipo_suscripcion = models.CharField(max_length=20,choices=TIPOS_SUSCRIPCION, default='Mensual')
+    tipo_suscripcion = models.CharField(max_length=20, choices=TIPOS_SUSCRIPCION, default='Mensual')
     fecha_inicio_suscripcion = models.DateField()
     email = models.EmailField()
+
 
 class Ticket(models.Model):
     id = models.AutoField(primary_key=True)
@@ -41,12 +53,12 @@ class Ticket(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True, blank=True)
 
 
-
 class Cobro(models.Model):
     id = models.AutoField(primary_key=True)
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
     importe = models.DecimalField(max_digits=5, decimal_places=2)
     fecha_pago = models.DateTimeField()
+
 
 class Abono(models.Model):
     id = models.AutoField(primary_key=True)

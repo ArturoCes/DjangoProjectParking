@@ -1,0 +1,8 @@
+<form method="post" action="{% url 'facturacion' %}">
+    {% csrf_token %}
+    <label for="fecha_inicio">Fecha de inicio:</label>
+    <input type="date" name="fecha_inicio">
+    <label for="fecha_fin">Fecha fin:</label>
+    <input type="date" name="fecha_fin">
+    <input type="submit" value="Generar factura">
+</form>

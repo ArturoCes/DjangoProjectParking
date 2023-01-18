@@ -1,0 +1,15 @@
+
+
+<form method="post" action="{% url 'retirar_abonado' %}">
+    {% csrf_token %}
+    <label for="matricula">Matrícula:</label>
+    <input type="text" name="matricula" id="matricula">
+    <br>
+    <label for="plaza_id">ID de la Plaza:</label>
+    <input type="text" name="plaza_id" id="plaza_id">
+    <br>
+    <label for="pin">Pin:</label>
+    <input type="text" name="pin" id="pin">
+    <br>
+    <input type="submit" value="Retirar abonado">
+</form>

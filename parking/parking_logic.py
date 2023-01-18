@@ -1,11 +1,12 @@
 import datetime
 
 import uuid
+from django.db.models import Sum
+
 
 from decimal import Decimal
 from datetime import datetime
 from .models import Plaza, Ticket, Cobro
-
 
 
 def generar_pin():
@@ -96,4 +97,25 @@ def retirar_vehiculo(matricula, plaza_id, pin):
     return cobro
 
 
+def retirar_abonado(matricula, plaza_id, pin):
+    try:
+        abono = Abono.objects.get(matricula=matricula, plaza_id=plaza_id, pin=pin)
+    except Abono.DoesNotExist:
+        return "Abono no válido"
 
+    # actualizar plaza
+    plaza = abono.plaza
+    plaza.estado = 'Reservada'
+    plaza.save()
+
+    return "Vehículo retirado"
+
+
+def facturacion(fecha_inicio, fecha_fin):
+    tickets = Ticket.objects.filter(fecha_entrada__range=(fecha_inicio, fecha_fin))
+    return tickets
+
+def total_facturacion(fecha_inicio, fecha_fin):
+    tickets = Ticket.facturacion(fecha_inicio, fecha_fin)
+    total = sum(ticket.cobro.importe for ticket in tickets)
+    return total

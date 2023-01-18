@@ -1,0 +1,21 @@
+<table>
+    <thead>
+        <tr>
+            <th>Número de plaza</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for plaza in plazas %}
+        <tr>
+            <td>{{ plaza.numero }}</td>
+            <td>{{ plaza.estado }}</td>
+            <td>
+                <a href="{% url 'editar_plaza' plaza.id %}">Editar</a>
+                <a href="{% url 'eliminar_plaza' plaza.id %}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

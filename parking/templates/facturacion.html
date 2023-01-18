@@ -1,0 +1,14 @@
+<table>
+  <tr>
+    <th>Matricula</th>
+    <th>Fecha de entrada</th>
+  </tr>
+  {% for ticket in tickets %}
+  <tr>
+    <td>{{ ticket.matricula }}</td>
+    <td>{{ ticket.fecha_entrada }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+
