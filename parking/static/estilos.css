@@ -1,0 +1,48 @@
+body {
+
+    background-image: linear-gradient(to right, #5709e8, #c09eff);
+    color: white;
+}
+
+header > img {
+    width: 100%;
+    height: 300px;
+    border: black 2px solid;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+}
+
+label {
+    color: white;
+}
+input:focus{
+			outline: none;
+			border-radius: 5px;
+			border:red 2px solid;
+
+		}
+		input{
+			border:blue 2px solid;
+			border-radius: 5px;
+			transition: border 0.5s;
+		}
+
+		input:checked {
+            background-color: red;
+        }
+.eo{
+    justify-content: center;
+
+    text-align: center;
+    background-color: #5709e8;
+    color: blue;
+
+
+}
+.lab{
+    background-color: #5709e8;
+    color: blue;
+}

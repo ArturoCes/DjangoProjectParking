@@ -1,14 +1,32 @@
-<form method="post" action="{% url 'depositar_vehiculo' %}">
-  {% csrf_token %}
-  <label for="matricula">Matrícula:</label>
-  <input type="text" id="matricula" name="matricula" required>
-  <br>
-  <label for="tipo">Tipo de vehículo:</label>
-  <select id="tipo" name="tipo" required>
-    <option value="Turismo">Turismo</option>
-    <option value="Moto">Moto</option>
-    <option value="PMR">Movilidad reducida</option>
-  </select>
-  <br><br>
-  <input type="submit" value="Depositar vehículo">
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ejercicio02</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static '/estilos.css' %}">
+</head>
+<body>
+<div class="eo">
+    <form method="post" action="{% url 'depositar_vehiculo' %}">
+        {% csrf_token %}
+        <div class="segment">
+            <h1>Depositar Vehiculo</h1>
+        </div>
+        <label for="matricula">Matrícula:</label>
+        <input type="text" id="matricula" name="matricula" required>
+        </br>
+        </br>
+        <label for="tipo">Tipo de vehículo:</label>
+        <select id="tipo" name="tipo" required>
+            <option value="Turismo">Turismo</option>
+            <option value="Moto">Moto</option>
+            <option value="PMR">Movilidad reducida</option>
+            </br>
+        </select>
+        </br></br>
+        <input type="submit" class="boton" value="Depositar vehículo">
+
+    </form>
+</div>
+</body>
+</html>
