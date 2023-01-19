@@ -1,12 +1,8 @@
 import datetime
 
 import uuid
-from django.db.models import Sum
-
-
-from decimal import Decimal
 from datetime import datetime
-from .models import Plaza, Ticket, Cobro
+from .models import *
 
 
 def generar_pin():
