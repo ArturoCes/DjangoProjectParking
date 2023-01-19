@@ -1,11 +1,27 @@
-<form method="post" action="{% url 'depositar_abonado' %}">
-    {% csrf_token %}
-    <label for="matricula">Matrícula:</label>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Depositar vehiculo abonado</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static '/estilos.css' %}">
+</head>
+<body>
+<div class="eo">
 
-<input type="text" name="matricula" id="matricula">
-    <br>
-    <label for="dni">DNI:</label>
-    <input type="text" name="dni" id="dni">
-    <br>
-    <input type="submit" value="Depositar vehículo">
-</form>
+    <form method="post" action="{% url 'depositar_abonado' %}">
+        {% csrf_token %}
+        <div class="segment">
+            <h1>Depositar vehiculo abonado</h1>
+        </div>
+        <label for="matricula">Matrícula:</label>
+
+        <input type="text" name="matricula" id="matricula">
+        </br></br>
+        <label for="dni">DNI:</label>
+        <input type="text" name="dni" id="dni">
+        </br></br>
+        <input type="submit" value="Depositar vehículo">
+    </form>
+</div>
+</body>
+</html>

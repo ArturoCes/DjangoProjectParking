@@ -1,13 +1,30 @@
-<form method="post" action="{% url 'retirar_vehiculo' %}">
-    {% csrf_token %}
-    <label for="matricula">Matrícula:</label>
-    <input type="text" name="matricula" id="matricula">
-    <br>
-    <label for="id">ID de la Plaza:</label>
-    <input type="text" name="id" id="id">
-    <br>
-    <label for="pin">Pin:</label>
-    <input type="text" name="pin" id="pin">
-    <br>
-    <input type="submit" value="Retirar vehículo">
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ejercicio02</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static '/estilos.css' %}">
+</head>
+<body>
+<div class="eo">
+    <form method="post" action="{% url 'retirar_vehiculo' %}">
+        {% csrf_token %}
+        <div class="segment">
+            <h1>Retirar vehiculo</h1>
+        </div>
+        <label for="matricula">Matrícula:</label>
+        <input type="text" name="matricula" id="matricula">
+        </br>
+        </br>
+        <label for="id">ID de la Plaza:</label>
+        <input type="text" name="id" id="id">
+        </br>
+        </br>
+        <label for="pin">Pin:</label>
+        <input type="text" name="pin" id="pin">
+        </br>
+        <input type="submit" value="Retirar vehículo">
+    </form>
+</div>
+</body>
+</html>
