@@ -2,13 +2,14 @@ body {
 
     background-image: linear-gradient(to right, #5709e8, #c09eff);
     color: white;
-}
 
+}
 header > img {
     width: 100%;
     height: 300px;
     border: black 2px solid;
 }
+
 
 h1 {
     text-align: center;
@@ -38,11 +39,7 @@ input:focus{
 
     text-align: center;
     background-color: #5709e8;
-    color: blue;
+    color: white;
 
 
-}
-.lab{
-    background-color: #5709e8;
-    color: blue;
 }

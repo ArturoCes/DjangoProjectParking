@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Depositar vehiculo</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static '/estilos.css' %}">
+</head>
+<body>
+<div class="eo">
+    <form method="post" action="{% url 'crear_abono' %}">
+    {% csrf_token %}
+    <label for="nombre">Nombre:</label>
+    <input type="text" name="nombre" required>
+        </br></br>
+    <label for="apellidos">Apellido:</label>
+    <input type="text" name="apellido" required>
+        </br></br>
+    <label for="dni">DNI:</label>
+    <input type="text" name="dni" required>
+        </br></br>
+    <label for="email">Email:</label>
+    <input type="email" name="email" required>
+        </br></br>
+    <label for="matricula">Matricula:</label>
+    <input type="text" name="matricula" required>
+        </br></br>
+
+    <label for="tipo_suscripcion">Tipo de suscripcion:</label>
+    <select name="tipo_suscripcion" required>
+        <option value="mensual">Mensual</option>
+         <option value="mensual">Trimestral</option>
+         <option value="mensual">Seemestral</option>
+        <option value="anual">Anual</option>
+    </select>
+        </br></br>
+    <select name="tipo_abono" required>
+        <option value="coche">Coche</option>
+        <option value="moto">Moto</option>
+           <option value="PMR">PMR</option>
+    </select>
+        </br></br>
+    <input type="submit" value="Crear Abono">
+
+</form>
+</div>
+</body>
+</html>

@@ -1,15 +1,26 @@
-
-
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Retirar Abonado</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static '/estilos.css' %}">
+</head>
+<body>
+<h1>Retirar Abonado</h1>
+<div class="eo">
 <form method="post" action="{% url 'retirar_abonado' %}">
     {% csrf_token %}
-    <label for="matricula">Matrícula:</label>
-    <input type="text" name="matricula" id="matricula">
+    <label for="dni">DNI:</label>
+    <input type="text" id="dni" name="dni" required>
     <br>
-    <label for="plaza_id">ID de la Plaza:</label>
-    <input type="text" name="plaza_id" id="plaza_id">
+    <label for="id_plaza">ID de la plaza:</label>
+    <input type="text" id="id_plaza" name="id_plaza" required>
     <br>
-    <label for="pin">Pin:</label>
-    <input type="text" name="pin" id="pin">
+    <label for="pin">PIN:</label>
+    <input type="password" id="pin" name="pin" required>
     <br>
-    <input type="submit" value="Retirar abonado">
+    <input type="submit" value="Retirar abono">
 </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+<h1>Plazas</h1>
+{% for plaza in plazas %}
+  <div class="plaza {% if plaza.estado == 'Libre' %}libre{% elif plaza.estado == 'Ocupada' %}ocupada{% else %}reservada{% endif %}">
+    Plaza {{ plaza.numero }} - {{ plaza.estado }}
+  </div>
+{% endfor %}
+{% endblock %}
+</body>
+</html>

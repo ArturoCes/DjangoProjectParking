@@ -2,6 +2,7 @@ from django.db import models
 
 from django.db.models import Sum
 
+
 class Plaza(models.Model):
     ESTADO_OCUPADO = 'Ocupado'
     ESTADO_LIBRE = 'Libre'
@@ -21,9 +22,9 @@ class Plaza(models.Model):
 
 class Cliente(models.Model):
     id = models.AutoField(primary_key=True)
-    dni = models.CharField(max_length=20)
+    dni = models.CharField(max_length=20,null=True,blank=True)
     nombre = models.CharField(max_length=20)
-    apellidos = models.CharField(max_length=20)
+    apellidos = models.CharField(max_length=20, null=True, blank=True)
     num_tarjeta = models.CharField(max_length=20)
 
     TIPOS_ABONO = (
@@ -40,14 +41,15 @@ class Cliente(models.Model):
         ('Anual', 'Anual'),
     )
     tipo_suscripcion = models.CharField(max_length=20, choices=TIPOS_SUSCRIPCION, default='Mensual')
-    fecha_inicio_suscripcion = models.DateField()
-    email = models.EmailField()
+    fecha_inicio_suscripcion = models.DateField(null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
 
 
 class Ticket(models.Model):
     id = models.AutoField(primary_key=True)
     matricula = models.CharField(max_length=20)
     fecha_entrada = models.DateTimeField()
+    fecha_salida = models.DateTimeField(null=True)
     plaza = models.ForeignKey(Plaza, on_delete=models.CASCADE)
     pin = models.CharField(max_length=6)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True, blank=True)
@@ -63,7 +65,8 @@ class Cobro(models.Model):
 class Abono(models.Model):
     id = models.AutoField(primary_key=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE,null= True)
     plaza = models.ForeignKey(Plaza, on_delete=models.CASCADE)
-    fecha_inicio = models.DateField()
-    fecha_vencimiento = models.DateField()
+    fecha_inicio = models.DateField(null=True, blank=True)
+    fecha_vencimiento = models.DateField(null=True, blank=True)
     pin = models.CharField(max_length=6)

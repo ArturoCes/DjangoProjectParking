@@ -2,12 +2,16 @@
 <html>
 <head>
     <title>Ticket de Depósito</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static '/estilos.css' %}">
 </head>
 <body>
+<div class="eo">
     <h1>Ticket de Depósito</h1>
     <p>Matrícula: {{ ticket.matricula }}</p>
     <p>Fecha de Entrada: {{ ticket.fecha_entrada }}</p>
     <p>Plaza Asignada: {{ ticket.plaza.numero }}</p>
     <p>Pin: {{ ticket.pin }}</p>
+</div>
 </body>
 </html>

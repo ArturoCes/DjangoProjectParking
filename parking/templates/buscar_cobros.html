@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="POST">
+    {% csrf_token %}
+    <label>Fecha de entrada:</label>
+    <input type="date" name="fecha_entrada" required>
+    <label>Fecha de salida:</label>
+    <input type="date" name="fecha_salida" required>
+    <input type="submit" value="Consultar">
+</form>
+</body>
+</html>

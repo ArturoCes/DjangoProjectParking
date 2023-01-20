@@ -1,7 +1,19 @@
-<h1>Ticket de Depósito</h1>
-<p>Matrícula: {{cobro.ticket.matricula}}</p>
-<p>Fecha de Entrada: {{cobro.ticket.fecha_entrada}}</p>
-<p>Fecha de Salida: {{cobro.fecha_pago}}</p>
-<p>Plaza Asignada: {{cobro.ticket.plaza.numero}}</p>
-<p>Pin: {{cobro.ticket.pin}}</p>
-<p>Importe a pagar: {{cobro.importe}}</p>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ticket de Depósito</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static '/estilos.css' %}">
+</head>
+<body>
+<div class="eo">
+    <h1>Ticket de Depósito</h1>
+    <p>Matrícula: {{cobro.ticket.matricula}}</p>
+    <p>Fecha de Entrada: {{cobro.ticket.fecha_entrada}}</p>
+    <p>Fecha de Salida: {{cobro.fecha_pago}}</p>
+    <p>Plaza Asignada: {{cobro.ticket.plaza.numero}}</p>
+    <p>Pin: {{cobro.ticket.pin}}</p>
+    <p>Importe a pagar: {{cobro.importe}}</p>
+</div>
+</body>
+</html>
