@@ -1,7 +1,9 @@
 # Proyecto_Parking
 ## Entorno de desarrollo y ejecución:
 
+
 Para ejecutar el proyecto abre el terminal y ejecuta el comando --> - python manage.py runserver
+Para acceder a la parte de base de datos se usa la dirección /admin y se ingresa con el usuario admin y contraseña admin
 
 ## Organización del proyecto:
 En este proyecto hemos llamado Parking, ya que se trata de gestionar un Parking en el cual hay dos áreas que el usuario puede acceder, tanto al sistema de Administrador como al sistema de Usuario, en la que en cada uno contará con sus propias funcionalidades y características.
