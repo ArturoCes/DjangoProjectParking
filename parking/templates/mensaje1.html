@@ -1,18 +1,14 @@
 <!DOCTYPE html>
-{% csrf_token %}
+ {% csrf_token %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    {% load static %}
+     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static '/estilos.css' %}">
 </head>
 <body>
-<div class="eo">
-    <h1>Ups... Algo salio mal</h1>
-    <a href="/">
-        <button> volver</button>
-    </a>
-</div>
+Lo siento, no hay plazas libres disponibles para ese tipo de vehículo
+<a href="/"><button> volver</button></a>
 </body>
 </html>

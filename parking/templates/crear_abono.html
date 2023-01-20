@@ -14,9 +14,9 @@
     <input type="text" name="nombre" required>
         </br></br>
     <label for="apellidos">Apellido:</label>
-    <input type="text" name="apellido" required>
+    <input type="text" name="apellidos" required>
         </br></br>
-    <label for="dni">DNI:</label>
+    <label for="dni" >DNI:</label>
     <input type="text" name="dni" required>
         </br></br>
     <label for="email">Email:</label>
@@ -25,19 +25,23 @@
     <label for="matricula">Matricula:</label>
     <input type="text" name="matricula" required>
         </br></br>
+         <label for="num_tarjeta">Número de tarjeta:</label>
+    <input type="text" name="num_tarjeta" required>
+        </br></br>
 
     <label for="tipo_suscripcion">Tipo de suscripcion:</label>
     <select name="tipo_suscripcion" required>
         <option value="mensual">Mensual</option>
-         <option value="mensual">Trimestral</option>
-         <option value="mensual">Seemestral</option>
+         <option value="Trimestral">Trimestral</option>
+         <option value="semestral">Semestral</option>
         <option value="anual">Anual</option>
     </select>
         </br></br>
-    <select name="tipo_abono" required>
-        <option value="coche">Coche</option>
-        <option value="moto">Moto</option>
-           <option value="PMR">PMR</option>
+         <label for="tipo">Tipo de suscripcion:</label>
+    <select name="tipo" required>
+        <option value="TIPO_TURISMO">Coche</option>
+        <option value="TIPO_MOTO">Moto</option>
+           <option value="TIPO_PMR">PMR</option>
     </select>
         </br></br>
     <input type="submit" value="Crear Abono">

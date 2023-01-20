@@ -1,7 +1,12 @@
 import datetime
+import string
 
 import uuid
 from datetime import datetime
+from random import random
+
+from django.shortcuts import render
+
 from .models import *
 from .forms import CrearAbonoForm
 import pytz
@@ -119,7 +124,6 @@ def depositar_abonado(dni, matricula):
         return False, "DNI o matrícula no válido"
 
 
-
 def facturacion(fecha_inicio, fecha_fin):
     tickets = Ticket.objects.filter(fecha_entrada__range=(fecha_inicio, fecha_fin))
     return tickets
@@ -130,23 +134,33 @@ def cobros_rango(fecha_inicio, fecha_fin):
 
 
 def retirar_abonado(dni, id_plaza, pin):
-    cliente = Cliente.objects.get(dni=dni)
-    abono = Abono.objects.get(cliente=cliente)
-    if abono.plaza.id != id_plaza or abono.pin != pin:
-        return 'La información ingresada es incorrecta'
-    abono.plaza.estado = Plaza.ESTADO_LIBRE
-    abono.plaza.save()
-    abono.delete()
-    return 'Abono retirado exitosamente'
+    try:
+        cliente = Cliente.objects.get(dni=dni)
+        abono = Abono.objects.get(cliente=cliente)
+        if abono.plaza.id != id_plaza or abono.pin != abono.pin:
+            return 'La información ingresada es incorrecta'
+        plaza = Plaza.objects.get(id=id_plaza)
+        plaza.estado = Plaza.ESTADO_LIBRE
+        plaza.save()
+        abono.delete()
+        return 'Abono retirado exitosamente'
+    except Cliente.DoesNotExist:
+        return 'Cliente no existe'
+    except Abono.DoesNotExist:
+        return 'Abono no existe'
+    except Plaza.DoesNotExist:
+        return 'Plaza no existe'
 
 
-def crear_abono(nombre, apellidos, dni, telefono, email, matricula, tipo_suscripcion, monto_pagar):
-    cliente = Cliente.objects.create(nombre=nombre, apellidos=apellidos, dni=dni, telefono=telefono, email=email)
+def crear_abono(nombre, apellidos, dni, telefono, email, matricula, tipo_suscripcion, monto_pagar,num_tarjeta,tipo_abono):
+    cliente = Cliente.objects.create(nombre=nombre, apellidos=apellidos, dni=dni, telefono=telefono, email=email,
+                                     num_tarjeta=num_tarjeta,tipo_abono=tipo_abono,
+    tipo_suscripcion = tipo_suscripcion)
     pin = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
     plaza = Plaza.objects.filter(estado=Plaza.ESTADO_LIBRE).first()
     if not plaza:
         raise Exception("No hay plazas libres disponibles")
-    plaza.estado = Plaza.ESTADO_OCUPADO
+    plaza.estado = plaza.ESTADO_OCUPADO
     plaza.save()
     abono = Abono.objects.create(cliente=cliente, pin=pin, plaza=plaza, fecha_inicio=datetime.now())
     Ticket.objects.create(cliente=cliente, matricula=matricula, plaza=plaza, pin=pin, fecha_entrada=datetime.now(),
