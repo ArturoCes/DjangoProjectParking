@@ -123,13 +123,13 @@ def retirar_abonado_view(request):
                         plaza.save()
                         return render(request, 'mensajeExitoso.html', {'mensaje': 'Vehículo depositado'})
                     else:
-                        return render(request, 'mensaje.html', {'mensaje': 'La plaza no está libre'})
+                        return render(request, 'mensajePlaza.html', {'mensaje': 'La plaza no está libre'})
                 else:
-                    return render(request, 'mensaje.html', {'mensaje': 'La plaza no esta asignada a este cliente'})
+                    return render(request, 'mensajeErrorPlaza.html.html', {'mensaje': 'La plaza no esta asignada a este cliente'})
             except AttributeError:
-                return render(request, 'mensaje.html', {'mensaje': 'Matricula o plaza no válida'})
+                return render(request, 'mensajeMatricula.html', {'mensaje': 'Matricula o plaza no válida'})
         except Cliente.DoesNotExist:
-            return render(request, 'mensaje.html', {'mensaje': 'DNI no válido'})
+            return render(request, 'mensajeDNI.html', {'mensaje': 'DNI no válido'})
     else:
         return render(request, 'retirar_abonado.html')
 
@@ -144,7 +144,7 @@ def crear_abono_view(request):
         matricula = request.POST.get('matricula')
         tipo_suscripcion = request.POST.get('tipo_suscripcion')
         tipo_abono = request.POST.get('tipo_abono')
-        cliente = Cliente(nombre=nombre, apellidos=apellidos, dni=dni, email=email)
+        cliente = Cliente(nombre=nombre, apellidos=apellidos, dni=dni, email=email,tipo_abono=tipo_abono,tipo_suscripcion=tipo_suscripcion)
         cliente.save()
         plaza = Plaza.objects.filter(estado=Plaza.ESTADO_LIBRE).first()
         plaza.estado = Plaza.ESTADO_RESERVADO
