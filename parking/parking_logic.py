@@ -1,7 +1,12 @@
 import datetime
+import string
 
 import uuid
 from datetime import datetime
+from random import random
+
+from django.shortcuts import render
+
 from .models import *
 from .forms import CrearAbonoForm
 import pytz
@@ -122,27 +127,6 @@ def facturacion(fecha_inicio, fecha_fin):
 def cobros_rango(fecha_inicio, fecha_fin):
     return Cobro.objects.filter(fecha_pago__range=(fecha_inicio, fecha_fin))
 
-
-def depositar_abonado(dni, matricula):
-    try:
-        cliente = Cliente.objects.get(dni=dni)
-        abono = Abono.objects.get(cliente=cliente, ticket__matricula=matricula)
-        if abono.fecha_vencimiento > datetime.now():
-            plaza = abono.plaza
-            if plaza.estado == Plaza.ESTADO_RESERVADO:
-                plaza.estado = Plaza.ESTADO_OCUPADO
-                plaza.save()
-                ticket = Ticket(matricula=matricula, plaza=plaza, pin=abono.pin, fecha_entrada=datetime.now())
-                ticket.save()
-                return "Vehículo depositado"
-            else:
-                return "La plaza no está libre"
-        else:
-            return "Suscripción vencida"
-    except Cliente.DoesNotExist:
-        return "Cliente no encontrado"
-    except Abono.DoesNotExist:
-        return "Abono no encontrado"
 
 
 def retirar_abonado(dni, id_plaza, pin):

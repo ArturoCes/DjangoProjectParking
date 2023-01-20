@@ -9,7 +9,7 @@
 <h1>Depositar Abonado</h1>
 <div class="eo">
     <form method="POST" action="{% url 'depositar_abonado' %}">
-        {% csrf_token %}
+       {% csrf_token %}
         <div class="form-group">
             <label for="matricula">Matrícula:</label>
             <input type="text" class="form-control" id="matricula" name="matricula" required>

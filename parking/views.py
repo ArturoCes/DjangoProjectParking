@@ -25,8 +25,14 @@ class TicketList:
         self.tickets.append(ticket)
 
 
-def main_view(request):
-    return render(request, 'main.html')
+def landing_view(request):
+    return render(request, 'landingPage.html')
+
+def user_view(request):
+    return render(request, 'user.html')
+
+def admin_view(request):
+    return render(request, 'admin.html')
 
 def mostrar_cobros_view(request):
     if request.method == 'POST':
@@ -36,6 +42,7 @@ def mostrar_cobros_view(request):
         return render(request, 'mostrar_cobros.html', {'cobros': cobros})
     else:
         return render(request, 'buscar_cobros.html')
+
 
 def depositar_vehiculo_view(request):
     ticket_list = TicketList()
@@ -49,7 +56,7 @@ def depositar_vehiculo_view(request):
             return render(request, 'ticket.html', context)
         else:
             context = {'mensaje': 'Lo siento, no hay plazas libres disponibles para ese tipo de vehículo.'}
-            return render(request, 'mensaje.html', context)
+            return render(request, 'mensaje1.html', context)
     else:
         return render(request, 'depositar_vehiculo.html')
 
@@ -64,7 +71,7 @@ def retirar_vehiculo_view(request):
         if result:
             return render(request, 'ticket1.html', {'cobro': mensaje})
         else:
-            return render(request, 'mensaje.html', {'mensaje': mensaje})
+            return render(request, 'mensaje1.html', {'mensaje': mensaje})
     else:
         return render(request, 'retirar_vehiculo.html')
 
@@ -84,13 +91,14 @@ def depositar_abonado_view(request):
                     ticket.save()
                     return render(request, 'mensajeExitoso.html', {'mensaje': 'Vehículo depositado'})
                 else:
-                    return render(request, 'mensaje.html', {'mensaje': 'La plaza no está libre'})
+                    return render(request, 'mensajePlaza.html', {'mensaje': 'La plaza no está libre'})
             else:
-                return render(request, 'mensaje.html', {'mensaje': 'La plaza no esta asignada a este cliente'})
+                return render(request, 'mensajeErrorPlaza.html',
+                              {'mensaje': 'La plaza no esta asignada a este cliente'})
         except Cliente.DoesNotExist:
-            return render(request, 'mensaje.html', {'mensaje': 'DNI no válido'})
+            return render(request, 'mensajeDNI.html', {'mensaje': 'DNI no válido'})
         except Plaza.DoesNotExist:
-            return render(request, 'mensaje.html', {'mensaje': 'Matricula no válida'})
+            return render(request, 'mensajeMatricula.html', {'mensaje': 'Matricula no válida'})
     else:
         return render(request, 'depositar_abonado.html')
 
@@ -107,22 +115,24 @@ def retirar_abonado_view(request):
         pin = request.POST.get('pin')
         try:
             cliente = Cliente.objects.get(dni=dni)
-            plaza = Plaza.objects.get(ticket__matricula=matricula)
-            if plaza.ticket_set.filter(matricula=matricula, cliente=cliente).exists():
-                if plaza.estado == Plaza.ESTADO_OCUPADO:
-                    plaza.estado = Plaza.ESTADO_LIBRE
-                    plaza.save()
-                    return render(request, 'mensajeExitoso.html', {'mensaje': 'Vehículo depositado'})
+            try:
+                plaza = Plaza.objects.filter(ticket__matricula=matricula,estado=Plaza.ESTADO_OCUPADO).first()
+                if plaza.ticket_set.filter(matricula=matricula, cliente=cliente).exists():
+                    if plaza.estado == Plaza.ESTADO_OCUPADO:
+                        plaza.estado = Plaza.ESTADO_LIBRE
+                        plaza.save()
+                        return render(request, 'mensajeExitoso.html', {'mensaje': 'Vehículo depositado'})
+                    else:
+                        return render(request, 'mensaje.html', {'mensaje': 'La plaza no está libre'})
                 else:
-                    return render(request, 'mensaje.html', {'mensaje': 'La plaza no está libre'})
-            else:
-                return render(request, 'mensaje.html', {'mensaje': 'La plaza no esta asignada a este cliente'})
+                    return render(request, 'mensaje.html', {'mensaje': 'La plaza no esta asignada a este cliente'})
+            except AttributeError:
+                return render(request, 'mensaje.html', {'mensaje': 'Matricula o plaza no válida'})
         except Cliente.DoesNotExist:
             return render(request, 'mensaje.html', {'mensaje': 'DNI no válido'})
-        except Plaza.DoesNotExist:
-            return render(request, 'mensaje.html', {'mensaje': 'Matricula no válida'})
     else:
-        return render(request, 'depositar_abonado.html')
+        return render(request, 'retirar_abonado.html')
+
 
 
 def crear_abono_view(request):
