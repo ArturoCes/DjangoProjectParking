@@ -105,13 +105,19 @@ def depositar_abonado(dni, matricula):
         if plaza.estado == Plaza.ESTADO_LIBRE:
             plaza.estado = Plaza.ESTADO_OCUPADO
             plaza.save()
-            ticket = Ticket(matricula=matricula, plaza=plaza, pin=abono.pin, fecha_entrada=datetime.now())
-            ticket.save()
+            try:
+                ticket = Ticket.objects.get(matricula=matricula, plaza=plaza, pin=abono.pin)
+                ticket.fecha_entrada = datetime.now()
+                ticket.save()
+            except Ticket.DoesNotExist:
+                ticket = Ticket(matricula=matricula, plaza=plaza, pin=abono.pin, fecha_entrada=datetime.now())
+                ticket.save()
             return True, "Vehículo depositado"
         else:
             return False, "La plaza no está libre"
     except Abono.DoesNotExist:
         return False, "DNI o matrícula no válido"
+
 
 
 def facturacion(fecha_inicio, fecha_fin):
@@ -121,28 +127,6 @@ def facturacion(fecha_inicio, fecha_fin):
 
 def cobros_rango(fecha_inicio, fecha_fin):
     return Cobro.objects.filter(fecha_pago__range=(fecha_inicio, fecha_fin))
-
-
-def depositar_abonado(dni, matricula):
-    try:
-        cliente = Cliente.objects.get(dni=dni)
-        abono = Abono.objects.get(cliente=cliente, ticket__matricula=matricula)
-        if abono.fecha_vencimiento > datetime.now():
-            plaza = abono.plaza
-            if plaza.estado == Plaza.ESTADO_RESERVADO:
-                plaza.estado = Plaza.ESTADO_OCUPADO
-                plaza.save()
-                ticket = Ticket(matricula=matricula, plaza=plaza, pin=abono.pin, fecha_entrada=datetime.now())
-                ticket.save()
-                return "Vehículo depositado"
-            else:
-                return "La plaza no está libre"
-        else:
-            return "Suscripción vencida"
-    except Cliente.DoesNotExist:
-        return "Cliente no encontrado"
-    except Abono.DoesNotExist:
-        return "Abono no encontrado"
 
 
 def retirar_abonado(dni, id_plaza, pin):

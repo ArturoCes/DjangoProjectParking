@@ -82,7 +82,8 @@ def depositar_abonado_view(request):
                     plaza.save()
                     ticket = Ticket(matricula=matricula, plaza=plaza, pin=generar_pin(), fecha_entrada=datetime.now())
                     ticket.save()
-                    return render(request, 'mensajeExitoso.html', {'mensaje': 'Vehículo depositado'})
+                    context = {'ticket': ticket}
+                    return render(request, 'ticket.html', context)
                 else:
                     return render(request, 'mensaje.html', {'mensaje': 'La plaza no está libre'})
             else:
@@ -107,7 +108,7 @@ def retirar_abonado_view(request):
         pin = request.POST.get('pin')
         try:
             cliente = Cliente.objects.get(dni=dni)
-            plaza = Plaza.objects.get(ticket__matricula=matricula)
+            plaza = Plaza.objects.get(ticket__matricula=matricula, ticket__cliente=cliente)
             if plaza.ticket_set.filter(matricula=matricula, cliente=cliente).exists():
                 if plaza.estado == Plaza.ESTADO_OCUPADO:
                     plaza.estado = Plaza.ESTADO_LIBRE
@@ -122,7 +123,7 @@ def retirar_abonado_view(request):
         except Plaza.DoesNotExist:
             return render(request, 'mensaje.html', {'mensaje': 'Matricula no válida'})
     else:
-        return render(request, 'depositar_abonado.html')
+        return render(request, 'retirar_abonado.html')
 
 
 def crear_abono_view(request):
